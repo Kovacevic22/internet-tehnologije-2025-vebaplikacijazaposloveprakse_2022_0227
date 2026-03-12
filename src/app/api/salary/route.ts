@@ -6,6 +6,9 @@ export async function GET(req: NextRequest) {
         const query = searchParams.get("query") || "developer";
         const APP_ID = process.env.ADZUNA_APP_ID;
         const APP_KEY = process.env.ADZUNA_APP_KEY;
+        if (!APP_ID || !APP_KEY) {
+            return NextResponse.json({ message: "API kredencijali nisu konfigurisani" }, { status: 500 });
+        }
         const url = `https://api.adzuna.com/v1/api/jobs/us/history?app_id=${APP_ID}&app_key=${APP_KEY}&what=${encodeURIComponent(query)}`;
         const response = await fetch(url, {
             headers: { "Accept": "application/json" }

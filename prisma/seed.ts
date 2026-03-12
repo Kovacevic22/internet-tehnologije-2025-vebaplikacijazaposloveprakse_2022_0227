@@ -100,8 +100,15 @@ async function main() {
 
   for (let i = 0; i < ads.length; i++) {
     const company = allCompanies[i % allCompanies.length];
-    await prisma.ad.create({
-      data: {
+    await prisma.ad.upsert({
+      where: {
+        title_companyId: {
+          title: ads[i].title,
+          companyId: company.companyId
+        }
+      },
+      update: {},
+      create: {
         ...ads[i],
         companyId: company.companyId,
         status: JobStatus.ACTIVE,

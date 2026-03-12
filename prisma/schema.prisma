@@ -86,6 +86,7 @@ model Ad {
     jobType JobType
     applications JobApplication[]
     savedBy SavedAd[]
+    @@unique([title, companyId])
 }
 model SavedAd {
   studentId   Int
